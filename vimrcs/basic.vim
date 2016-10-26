@@ -88,6 +88,9 @@ map <space>k <C-W>k
 map <space>h <C-W>h
 map <space>l <C-W>l
 
+" Close the current buffer
+map <leader>bd :Bclose<cr>:tabclose<cr>gT
+
 map <Tab> :bnext<cr>
 map <S-Tab> :bprevious<cr>
 
@@ -110,9 +113,6 @@ endtry
 
 " Return to last edit position when opening files (You want this!)
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-
-" highlight last inserted text
-nnoremap gV `[v`]
 
 " Ignore compiled files
 set wildignore=*.o,*~,*.pyc
@@ -172,3 +172,24 @@ try
     source ~/.vim/vimrcs/plugins_config.vim
 catch
 endtry
+
+" Don't close window, when deleting a buffer
+command! Bclose call <SID>BufcloseCloseIt()
+function! <SID>BufcloseCloseIt()
+    let l:currentBufNum = bufnr("%")
+    let l:alternateBufNum = bufnr("#")
+
+    if buflisted(l:alternateBufNum)
+        buffer #
+    else
+        bnext
+    endif
+
+    if bufnr("%") == l:currentBufNum
+        new
+    endif
+
+    if buflisted(l:currentBufNum)
+        execute("bdelete!".l:currentBufNum)
+    endif
+endfunction
