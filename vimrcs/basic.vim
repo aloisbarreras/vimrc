@@ -1,6 +1,6 @@
 execute pathogen#infect()
 
-" set nocompatible
+set nocompatible
 syntax enable               " enable syntax processing
 
 set bg=dark
