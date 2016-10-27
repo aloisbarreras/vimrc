@@ -1,10 +1,11 @@
 execute pathogen#infect()
 
-set nocompatible
+"set nocompatible
 syntax enable               " enable syntax processing
 
 set bg=dark
-colorscheme hybrid_reverse  " Set colorscheme
+let g:solarized_termcolors=256  " Necessary according to docs. Must be set before 'colorscheme' option
+colorscheme solarized       " Set colorscheme
 
 set ttyfast                 " faster redraw
 
@@ -16,11 +17,11 @@ set lazyredraw              " Don't redraw while executing macros (good performa
 """""""""""""""""""""""
 " => Spaces and Tabs
 """""""""""""""""""""""
-set tabstop=4               " number of visual spaces per TAB
+set tabstop=2               " number of visual spaces per TAB
 set expandtab               " tabs are spaces
 set smarttab
-set softtabstop=4           " number of spaces in tab when editing
-set shiftwidth=4
+set softtabstop=2           " number of spaces in tab when editing
+set shiftwidth=2
 
 set modelines=1
 
@@ -215,5 +216,3 @@ function SetupJavaScriptLinter()
 endfunction
 
 autocmd FileType javascript call SetupJavaScriptLinter()
-
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
