@@ -215,3 +215,5 @@ function SetupJavaScriptLinter()
 endfunction
 
 autocmd FileType javascript call SetupJavaScriptLinter()
+
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
