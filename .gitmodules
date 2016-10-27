@@ -25,3 +25,12 @@
 [submodule "bundle/vim-colors-solarized"]
 	path = bundle/vim-colors-solarized
 	url = git://github.com/altercation/vim-colors-solarized.git
+[submodule "bundle/ultisnips"]
+	path = bundle/ultisnips
+	url = https://github.com/SirVer/ultisnips.git
+[submodule "bundle/vim-es6"]
+	path = bundle/vim-es6
+	url = https://github.com/isRuslan/vim-es6.git
+[submodule "bundle/vim-node"]
+	path = bundle/vim-node
+	url = https://github.com/moll/vim-node.git
