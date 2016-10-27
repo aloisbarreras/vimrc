@@ -27,7 +27,7 @@ set modelines=1
 filetype indent on          " load filetype-specific indent files
 filetype plugin on
 
-set autoindent
+set autoindent              " indent when creating new line
 set number                  " show line numbers
 set showcmd                 " show command in bottom bar
 set nocursorline            " highlight current line
