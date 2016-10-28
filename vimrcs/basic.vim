@@ -1,11 +1,31 @@
-execute pathogen#infect()
+set nocompatible
+filetype off
 
-"set nocompatible
+set rtp+=~/.vim_runtime/bundle/Vundle.vim
+
+call vundle#begin('~/.vim_runtime/bundle')
+
+Plugin 'kristijanhusak/vim-hybrid-material'
+Plugin 'jlanzarotta/bufexplorer'
+Plugin 'Raimondi/delimitMate'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/syntastic'
+Plugin 'SirVer/ultisnips'
+Plugin 'isRuslan/vim-es6'
+Plugin 'tpope/vim-fugitive'
+Plugin 'moll/vim-node'
+Plugin 'sjl/gundo.vim'
+
+call vundle#end()
+
+filetype plugin indent on
+
 syntax enable               " enable syntax processing
 
 set bg=dark
-let g:solarized_termcolors=256  " Necessary according to docs. Must be set before 'colorscheme' option
-colorscheme solarized       " Set colorscheme
+"let g:solarized_termcolors=256  " Necessary according to docs. Must be set before 'colorscheme' option
+colorscheme hybrid_reverse       " Set colorscheme
 
 set ttyfast                 " faster redraw
 
