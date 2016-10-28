@@ -16,6 +16,7 @@ Plugin 'isRuslan/vim-es6'
 Plugin 'tpope/vim-fugitive'
 Plugin 'moll/vim-node'
 Plugin 'sjl/gundo.vim'
+Plugin 'othree/es.next.syntax.vim'
 
 call vundle#end()
 
