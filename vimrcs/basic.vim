@@ -5,6 +5,7 @@ set rtp+=~/.vim_runtime/bundle/Vundle.vim
 
 call vundle#begin('~/.vim_runtime/bundle')
 
+Plugin 'VundleVim/Vundle.vim'
 Plugin 'kristijanhusak/vim-hybrid-material'
 Plugin 'jlanzarotta/bufexplorer'
 Plugin 'Raimondi/delimitMate'
@@ -17,6 +18,9 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'moll/vim-node'
 Plugin 'sjl/gundo.vim'
 Plugin 'othree/es.next.syntax.vim'
+Plugin 'honza/vim-snippets'
+Plugin 'othree/yajs.vim'
+Plugin 'ctrlpvim/ctrlp.vim'
 
 call vundle#end()
 
@@ -92,6 +96,7 @@ let g:mapleader = ","
 
 nnoremap <leader>nn :NERDTree<CR>
 nmap <leader>w :w!<cr>      " fast saving
+let g:ctrlp_map = '<leader>j' " ctrlp mapping
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " => Files, backups and undo
