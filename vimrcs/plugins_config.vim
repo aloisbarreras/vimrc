@@ -42,9 +42,9 @@ highlight link SyntasticWarningSign SignColumn
 highlight link SyntasticStyleErrorSign SignColumn
 highlight link SyntasticStyleWarningSign SignColumn
 
-""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""
 " => gundo
-" """"""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""
 let g:gundo_prefer_python3 = 1
 
 """"""""""""""""""""""""""""""""""

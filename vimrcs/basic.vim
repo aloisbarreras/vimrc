@@ -22,16 +22,19 @@ Plugin 'honza/vim-snippets'
 Plugin 'othree/yajs.vim'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'easymotion/vim-easymotion'
-Plugin 'mileszs/ack.vim'
 
 call vundle#end()
+
+try
+    source ~/.vim/vimrcs/plugins_config.vim
+catch
+endtry
 
 filetype plugin indent on
 
 syntax enable               " enable syntax processing
 
 set bg=dark
-"let g:solarized_termcolors=256  " Necessary according to docs. Must be set before 'colorscheme' option
 colorscheme hybrid_reverse       " Set colorscheme
 
 set ttyfast                 " faster redraw
@@ -99,6 +102,27 @@ let g:mapleader = ","
 nnoremap <leader>nn :NERDTree<CR>
 let g:ctrlp_map = '<leader>j' " ctrlp mapping
 
+"""""""""""""""""""""""""""""""
+" => The Silver Searcher
+"""""""""""""""""""""""""""""""
+if executable('ag')
+  " Use ag over grep
+  set grepprg=ag\ --nogroup\ --nocolor
+
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
+
+  " bind K to grep word under cursor
+  nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+
+  " bind \ (backward slash) to grep shortcut
+  command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
+  " nnoremap \ :Ag<SPACE>
+endif
+
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " => Files, backups and undo
 """"""""""""""""""""""""""""""""""""""""""""""""""
@@ -124,8 +148,8 @@ map <S-Tab> :bprevious<cr>
 
 " Specify the behavior when switching between buffers 
 try
-    set switchbuf=useopen,usetab,newtab
-    set stal=2
+  set switchbuf=useopen,usetab,newtab
+  set stal=2
 catch
 endtry
 
@@ -134,8 +158,8 @@ endtry
 "    means that you can undo even when you close a buffer/VIM
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 try
-    set undodir=~/.vim_runtime/tmp/undodir
-    set undofile
+  set undodir=~/.vim_runtime/tmp/undodir
+  set undofile
 catch
 endtry
 
@@ -145,20 +169,20 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 " Ignore compiled files
 set wildignore=*.o,*~,*.pyc
 if has("win16") || has("win32")
-    set wildignore+=.git\*,.hg\*,.svn\*
+  set wildignore+=.git\*,.hg\*,.svn\*
 else
-    set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
+  set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
 endif
 
 augroup configgroup
-    autocmd!
-    autocmd VimEnter * highlight clear SignColumn
-    autocmd BufWritePre *.php,*.py,*.js,*.txt,*.hs,*.java,*.md,*.rb :call <SID>StripTrailingWhitespaces()
-    autocmd BufEnter *.zsh-theme setlocal filetype=zsh
-    autocmd BufEnter Makefile setlocal noexpandtab
-    autocmd BufEnter *.sh setlocal tabstop=2
-    autocmd BufEnter *.sh setlocal shiftwidth=2
-    autocmd BufEnter *.sh setlocal softtabstop=2
+  autocmd!
+  autocmd VimEnter * highlight clear SignColumn
+  autocmd BufWritePre *.php,*.py,*.js,*.txt,*.hs,*.java,*.md,*.rb :call <SID>StripTrailingWhitespaces()
+  autocmd BufEnter *.zsh-theme setlocal filetype=zsh
+  autocmd BufEnter Makefile setlocal noexpandtab
+  autocmd BufEnter *.sh setlocal tabstop=2
+  autocmd BufEnter *.sh setlocal shiftwidth=2
+  autocmd BufEnter *.sh setlocal softtabstop=2
 augroup END
 
 """"""""""""""""""""""""""""""""""""""""""""""""
@@ -167,79 +191,74 @@ augroup END
 " strips trailing whitespace at the end of files. this
 " is called on buffer write in the autogroup above.
 function! <SID>StripTrailingWhitespaces()
-    " save last search & cursor position
-    let _s=@/
-    let l = line(".")
-    let c = col(".")
-    %s/\s\+$//e
-    let @/=_s
-    call cursor(l, c)
+  " save last search & cursor position
+  let _s=@/
+  let l = line(".")
+  let c = col(".")
+  %s/\s\+$//e
+  let @/=_s
+  call cursor(l, c)
 endfunction
 
 function! <SID>CleanFile()
-    " Preparation: save last search, and cursor position.
-    let _s=@/
-    let l = line(".")
-    let c = col(".")
-    " Do the business:
-    %!git stripspace
-    " Clean up: restore previous search history, and cursor position
-    let @/=_s
-    call cursor(l, c)
+  " Preparation: save last search, and cursor position.
+  let _s=@/
+  let l = line(".")
+  let c = col(".")
+  " Do the business:
+  %!git stripspace
+  " Clean up: restore previous search history, and cursor position
+  let @/=_s
+  call cursor(l, c)
 endfunction
 
 " Returns true if paste mode is enabled
 function! HasPaste()
-    if &paste
-        return 'PASTE MODE  '
-    endif
-    return ''
+  if &paste
+    return 'PASTE MODE  '
+  endif
+  return ''
 endfunction
-
-try
-    source ~/.vim/vimrcs/plugins_config.vim
-catch
-endtry
 
 " Don't close window, when deleting a buffer
 command! Bclose call <SID>BufcloseCloseIt()
 function! <SID>BufcloseCloseIt()
-    let l:currentBufNum = bufnr("%")
-    let l:alternateBufNum = bufnr("#")
+  let l:currentBufNum = bufnr("%")
+  let l:alternateBufNum = bufnr("#")
 
-    if buflisted(l:alternateBufNum)
-        buffer #
-    else
-        bnext
-    endif
+  if buflisted(l:alternateBufNum)
+    buffer #
+  else
+    bnext
+  endif
 
-    if bufnr("%") == l:currentBufNum
-        new
-    endif
+  if bufnr("%") == l:currentBufNum
+    new
+  endif
 
-    if buflisted(l:currentBufNum)
-        execute("bdelete!".l:currentBufNum)
-    endif
+  if buflisted(l:currentBufNum)
+    execute("bdelete!".l:currentBufNum)
+  endif
 endfunction
 
 " Syntastic local linter support
 let g:syntastic_javascript_checkers = []
 function CheckJavaScriptLinter(filepath, linter)
-    if exists('b:syntastic_checkers')
-        return
-    endif
-    if filereadable(a:filepath)
-        let b:syntastic_checkers = [a:linter]
-        let {'b:syntastic_' . a:linter . '_exec'} = a:filepath
-    endif
+  if exists('b:syntastic_checkers')
+    return
+  endif
+  if filereadable(a:filepath)
+    let b:syntastic_checkers = [a:linter]
+    let {'b:syntastic_' . a:linter . '_exec'} = a:filepath
+  endif
 endfunction
 
 function SetupJavaScriptLinter()
-    let l:current_folder = expand('%:p:h')
-    let l:bin_folder = fnamemodify(syntastic#util#findFileInParent('package.json', l:current_folder), ':h')
-    let l:bin_folder = l:bin_folder . '/node_modules/.bin/'
-    call CheckJavaScriptLinter(l:bin_folder . 'standard', 'standard')
-    call CheckJavaScriptLinter(l:bin_folder . 'eslint', 'eslint')
+  let l:current_folder = expand('%:p:h')
+  let l:bin_folder = fnamemodify(syntastic#util#findFileInParent('package.json', l:current_folder), ':h')
+  let l:bin_folder = l:bin_folder . '/node_modules/.bin/'
+  call CheckJavaScriptLinter(l:bin_folder . 'standard', 'standard')
+  call CheckJavaScriptLinter(l:bin_folder . 'eslint', 'eslint')
 endfunction
 
 autocmd FileType javascript call SetupJavaScriptLinter()
