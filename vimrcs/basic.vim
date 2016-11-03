@@ -21,6 +21,8 @@ Plugin 'othree/es.next.syntax.vim'
 Plugin 'honza/vim-snippets'
 Plugin 'othree/yajs.vim'
 Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'easymotion/vim-easymotion'
+Plugin 'mileszs/ack.vim'
 
 call vundle#end()
 
@@ -95,7 +97,6 @@ let mapleader=","
 let g:mapleader = ","
 
 nnoremap <leader>nn :NERDTree<CR>
-nmap <leader>w :w!<cr>      " fast saving
 let g:ctrlp_map = '<leader>j' " ctrlp mapping
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
