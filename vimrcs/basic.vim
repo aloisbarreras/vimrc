@@ -1,4 +1,4 @@
-set nocompatible
+set nocompatible " see :help 'nocompatible'
 filetype off
 
 set rtp+=~/.vim_runtime/bundle/Vundle.vim
@@ -22,6 +22,9 @@ Plugin 'honza/vim-snippets'
 Plugin 'othree/yajs.vim'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'easymotion/vim-easymotion'
+Plugin 'pangloss/vim-javascript'
+Plugin 'mxw/vim-jsx'
+Plugin 'fatih/vim-go'
 
 call vundle#end()
 
@@ -29,8 +32,6 @@ try
     source ~/.vim/vimrcs/plugins_config.vim
 catch
 endtry
-
-filetype plugin indent on
 
 syntax enable               " enable syntax processing
 
@@ -43,6 +44,7 @@ set backspace=indent,eol,start
 set whichwrap+=<,>,h,l
 
 set lazyredraw              " Don't redraw while executing macros (good performance config)
+set mouse=a
 
 """""""""""""""""""""""
 " => Spaces and Tabs
@@ -146,6 +148,30 @@ map <leader>bd :Bclose<cr>:tabclose<cr>gT
 
 map <Tab> :bnext<cr>
 map <S-Tab> :bprevious<cr>
+
+" Go to tab by number
+noremap <leader>1 1gt
+noremap <leader>2 2gt
+noremap <leader>3 3gt
+noremap <leader>4 4gt
+noremap <leader>5 5gt
+noremap <leader>6 6gt
+noremap <leader>7 7gt
+noremap <leader>8 8gt
+noremap <leader>9 9gt
+noremap <leader>0 :tablast<cr>
+
+map <leader>tn :tabnew<cr>
+map <leader>to :tabonly<cr>
+map <leader>tc :tabclose<cr>
+map <leader>tm :tabmove 
+
+" Opens a new tab with the current buffer's path
+" Super useful when editing files in the same directory
+map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
+
+" Switch CWD to the directory of the open buffer:
+map <leader>cd :cd %:p:h<cr>:pwd<cr>
 
 " Specify the behavior when switching between buffers 
 try

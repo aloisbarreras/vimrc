@@ -52,3 +52,8 @@ let g:gundo_prefer_python3 = 1
 """"""""""""""""""""""""""""""""""
 let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
+
+""""""""""""""""""""""""""""""""""
+" => vim-jsx
+""""""""""""""""""""""""""""""""""
+let g:jsx_ext_required = 0  " Enable highlighting on .js files
